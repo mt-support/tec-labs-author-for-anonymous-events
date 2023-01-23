@@ -45,9 +45,6 @@ class Settings {
 
 		$this->set_options_prefix( $options_prefix );
 
-		// Remove settings specific to Google Maps
-		add_action( 'admin_init', [ $this, 'remove_settings' ] );
-
 		// Add settings specific to OSM
 		add_action( 'admin_init', [ $this, 'add_settings' ] );
 	}
@@ -205,23 +202,6 @@ class Settings {
 	}
 
 	/**
-	 * Here is an example of removing settings from Events > Settings > General tab > "Map Settings" section
-	 * that are specific to Google Maps.
-	 *
-	 * TODO: Remove this method and the corresponding hook in `__construct()` if you don't want to remove any settings.
-	 */
-	public function remove_settings() {
-		// Remove "Enable Google Maps" checkbox
-		$this->settings_helper->remove_field( 'embedGoogleMaps', 'general' );
-
-		// Remove "Map view search distance limit" (default of 25)
-		$this->settings_helper->remove_field( 'geoloc_default_geofence', 'general' );
-
-		// Remove "Google Maps default zoom level" (0-21, default of 10)
-		$this->settings_helper->remove_field( 'embedGoogleMapsZoom', 'general' );
-	}
-
-	/**
 	 * Adds a new section of fields to Events > Settings > General tab, appearing after the "Map Settings" section
 	 * and before the "Miscellaneous Settings" section.
 	 *
@@ -229,25 +209,34 @@ class Settings {
 	 */
 	public function add_settings() {
 		$fields = [
-			// TODO: Settings heading start. Remove this element if not needed. Also remove the corresponding `get_example_intro_text()` method below.
-			'Example'   => [
-				'type' => 'html',
-				'html' => $this->get_example_intro_text(),
-			],
 			// TODO: Settings heading end.
-			'a_setting' => [ // TODO: Change setting.
-				'type'            => 'text',
-				'label'           => esc_html__( 'Example setting', 'tec-labs-author-for-anonymous-events' ),
-				'tooltip'         => sprintf( esc_html__( 'Example setting description. Enter your custom URL, including "http://" or "https://", for example %s.', 'tec-labs-author-for-anonymous-events' ), '<code>https://demo.theeventscalendar.com/</code>' ),
-				'validation_type' => 'html',
+			'author_for_anonymous' => [ // TODO: Change setting.
+				'type'            => 'dropdown',
+				'label'           => esc_html__( 'Author of anonymously submitted events', 'tec-labs-author-for-anonymous-events' ),
+				'tooltip'         => esc_html__( 'Select a user that will be used as the author of anonymously submitted events.', 'tec-labs-author-for-anonymous-events' ),
+				'validation_type' => 'options',
+				'size'            => 'small',
+				'options'         => $this->get_user_list(),
+				'default'         => 0,
 			],
 		];
 
+		/*
+		 * 		'type'            => 'dropdown',
+		'label'           => __( 'Events template', 'the-events-calendar' ),
+		'tooltip'         => __( 'Choose a page template to control the appearance of your calendar and event content.', 'the-events-calendar' ),
+		'validation_type' => 'options',
+		'size'            => 'small',
+		'default'         => 'default',
+		'options'         => $template_options,
+		'conditional' => ( ! tec_is_full_site_editor() ),
+		 * */
+
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
-			'general',
-			'tribeEventsMiscellaneousTitle',
-			true
+			'community',
+			'allowAnonymousSubmissions',
+			false,
 		);
 	}
 
@@ -271,22 +260,29 @@ class Settings {
 		return (array) $prefixed_fields;
 	}
 
-	/**
-	 * Here is an example of getting some HTML for the Settings Header.
-	 *
-	 * TODO: Delete this method if you do not need a heading for your settings. Also remove the corresponding element in the the $fields array in the `add_settings()` method above.
-	 *
-	 * @return string
-	 */
-	private function get_example_intro_text() {
-		$result = '<h3>' . esc_html_x( 'Example Extension Setup', 'Settings header', 'tec-labs-author-for-anonymous-events' ) . '</h3>';
-		$result .= '<div style="margin-left: 20px;">';
-		$result .= '<p>';
-		$result .= esc_html_x( 'Some text here about this settings section.', 'Setting section description', 'tec-labs-author-for-anonymous-events' );
-		$result .= '</p>';
-		$result .= '</div>';
+	private function get_user_list() {
 
-		return $result;
+		$get_users = get_users( [
+			'role__in' => [
+				'Administrator',
+				'Editor',
+			],
+			'fields'   => [
+				'id',
+				'display_name',
+			],
+			'orderby'  => 'display_name',
+		] );
+
+		$users = [
+			0 => '(default)',
+			];
+
+		foreach ( $get_users as $user ) {
+			$users[$user->ID] = $user->display_name;
+		}
+
+		return $users;
 	}
 
 }
