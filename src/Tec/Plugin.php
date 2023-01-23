@@ -186,6 +186,13 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		return $settings->get_option( $option, $default );
 	}
 
+	/**
+	 * Filter the author of the Community Events submission.
+	 *
+	 * @param $post_data
+	 *
+	 * @return mixed
+	 */
 	public function filter_community_submission_author( $post_data ) {
 		if (
 			! empty( $_POST['community-event'] )

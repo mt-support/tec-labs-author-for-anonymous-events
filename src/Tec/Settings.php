@@ -214,17 +214,6 @@ class Settings {
 			],
 		];
 
-		/*
-		 * 		'type'            => 'dropdown',
-		'label'           => __( 'Events template', 'the-events-calendar' ),
-		'tooltip'         => __( 'Choose a page template to control the appearance of your calendar and event content.', 'the-events-calendar' ),
-		'validation_type' => 'options',
-		'size'            => 'small',
-		'default'         => 'default',
-		'options'         => $template_options,
-		'conditional' => ( ! tec_is_full_site_editor() ),
-		 * */
-
 		$this->settings_helper->add_fields(
 			$this->prefix_settings_field_keys( $fields ),
 			'community',
@@ -253,6 +242,13 @@ class Settings {
 		return (array) $prefixed_fields;
 	}
 
+	/**
+	 * Get a list of users with editor or administrator role.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
 	private function get_user_list() {
 
 		$get_users = get_users( [
