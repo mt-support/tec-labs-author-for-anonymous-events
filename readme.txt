@@ -9,13 +9,13 @@ Stable tag: 1.0.0
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-This extension allows you to set an author for anonymously submitted events with Community Events
+This extension allows you to set a default author for anonymously submitted events through Community Events.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+This extension allows you to set a default author for events, which are submitted anonymously through Community Events.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and Markdown parsed.
+You will find the setting under *Events → Settings → Community* where you can select a user with editor or administrator role to be used as the default author for these events.
 
 == Installation ==
 
@@ -37,6 +37,6 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 == Changelog ==
 
-= [1.0.0] YYYY-MM-DD =
+= [1.0.0] 2023-01-23 =
 
 * Initial release

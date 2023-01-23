@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       The Events Calendar: Community Events Extension: Select Author for Anonymously Submitted Events
- * Plugin URI:        https://github.com/andrasguseo/tec-labs-author-for-anonymous-events
+ * Plugin URI:        https://theeventscalendar.com/extensions/author-for-anonymous-events
  * GitHub Plugin URI: https://github.com/mt-support/tec-labs-author-for-anonymous-events
- * Description:       This extension allows you to set an author for anonymously submitted events with Community Events
+ * Description:       This extension allows you to set an author for anonymously submitted events with Community Events.
  * Version:           1.0.0
  * Author:            The Events Calendar
  * Author URI:        https://evnt.is/1971
