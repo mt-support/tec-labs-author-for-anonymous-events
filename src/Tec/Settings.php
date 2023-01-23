@@ -12,8 +12,6 @@ use Tribe__Settings_Manager;
 
 /**
  * Do the Settings.
- *
- * TODO: Delete file if not using settings
  */
 class Settings {
 
@@ -35,8 +33,6 @@ class Settings {
 
 	/**
 	 * Settings constructor.
-	 *
-	 * TODO: Update this entire class for your needs, or remove the entire `src` directory this file is in and do not load it in the main plugin file.
 	 *
 	 * @param string $options_prefix Recommended: the plugin text domain, with hyphens converted to underscores.
 	 */
@@ -204,13 +200,10 @@ class Settings {
 	/**
 	 * Adds a new section of fields to Events > Settings > General tab, appearing after the "Map Settings" section
 	 * and before the "Miscellaneous Settings" section.
-	 *
-	 * TODO: Move the setting to where you want and update this docblock. If you like it here, just delete this TODO.
 	 */
 	public function add_settings() {
 		$fields = [
-			// TODO: Settings heading end.
-			'author_for_anonymous' => [ // TODO: Change setting.
+			'author_for_anonymous' => [
 				'type'            => 'dropdown',
 				'label'           => esc_html__( 'Author of anonymously submitted events', 'tec-labs-author-for-anonymous-events' ),
 				'tooltip'         => esc_html__( 'Select a user that will be used as the author of anonymously submitted events.', 'tec-labs-author-for-anonymous-events' ),
