@@ -104,7 +104,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		// Start binds.
 
-
+		add_filter( 'wp_insert_post_data', [ $this, 'filter_community_submission_author' ], 10, 1 );
 
 		// End binds.
 
@@ -196,4 +196,19 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		return $settings->get_option( $option, $default );
 	}
+
+	public function filter_community_submission_author( $post_data ) {
+		if (
+			! empty( $_POST['community-event'] )
+			&& $post_data['post_type'] == \Tribe__Events__Main::POSTTYPE
+			&& empty( $post_data['post_author'] )
+			&& ! is_user_logged_in()
+		) {
+			$author = $this->get_option( 'author_for_anonymous', 0 );
+			$post_data['post_author'] = $author;
+		}
+
+		return $post_data;
+	}
+
 }
